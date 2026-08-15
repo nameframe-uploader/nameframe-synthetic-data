@@ -11,15 +11,17 @@ const links = [
 ---
 
 <header class="site-header">
-  <a class="brand" href={withBase('/')} aria-label="NameFrame samples home">
-    <img src={withBase('/brand/nameframe-mark-black.png')} width="44" height="44" alt="" />
-    <span class="brand-copy">
-      <span class="brand-name">Name<span>Frame</span></span>
-      <small>public dataset gallery</small>
-    </span>
-  </a>
-  <nav aria-label="Primary navigation">
-    {links.map(([label, href]) => <a href={withBase(href)}>{label}</a>)}
-  </nav>
-  <a class="button button-small" href="https://getnameframe.com/pilot">Apply for a pilot</a>
+  <div class="header-inner">
+    <a class="brand" href={withBase('/')} aria-label="NameFrame samples home">
+      <img src={withBase('/brand/nameframe-mark-black.png')} width="44" height="44" alt="" />
+      <span class="brand-copy">
+        <span class="brand-name">Name<span>Frame</span></span>
+        <small>public dataset gallery</small>
+      </span>
+    </a>
+    <nav aria-label="Primary navigation">
+      {links.map(([label, href]) => <a href={withBase(href)}>{label}</a>)}
+    </nav>
+    <a class="button button-small" href="https://getnameframe.com/pilot">Apply for a pilot</a>
+  </div>
 </header>
