@@ -64,7 +64,10 @@ const structuredData = breadcrumbJsonLd ? [...suppliedJsonLd, breadcrumbJsonLd] 
     <meta name="theme-color" content="#ffffff" />
     {!noindex && <link rel="canonical" href={canonical} />}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={withBase('/favicon-48.png')} type="image/png" sizes="48x48" />
+    <link rel="icon" href={withBase('/favicon-96.png')} type="image/png" sizes="96x96" />
+    <link rel="shortcut icon" href={withBase('/favicon.ico')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-icon.png')} sizes="180x180" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="NameFrame Sample Registry" />
     <meta property="og:title" content={title} />

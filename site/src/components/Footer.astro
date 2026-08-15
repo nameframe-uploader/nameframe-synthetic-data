@@ -3,9 +3,12 @@ import { withBase } from '@/lib/data';
 ---
 
 <footer class="site-footer">
-  <div>
-    <strong>NameFrame</strong>
-    <p>Inspectable synthetic-data outputs generated in Unreal Engine.</p>
+  <div class="footer-brand">
+    <img src={withBase('/brand/nameframe-mark-black.png')} width="48" height="48" alt="" loading="lazy" />
+    <div>
+      <strong class="brand-name">Name<span>Frame</span></strong>
+      <p>Inspectable synthetic-data outputs generated in Unreal Engine.</p>
+    </div>
   </div>
   <div class="footer-links">
     <a href={withBase('/terms/')}>Data terms</a>

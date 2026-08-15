@@ -1,5 +1,9 @@
 # NameFrame Synthetic Data Samples for Unreal Engine
 
+<p align="center">
+  <img src="./assets/nameframe-brand-lockup.webp" width="640" alt="NameFrame — Frame the world. Name the frames.">
+</p>
+
 Inspectable outputs and dataset cards produced with NameFrame, an Unreal-native synthetic-data studio for computer vision.
 
 [Explore the visual dataset gallery](https://nameframe-uploader.github.io/nameframe-synthetic-data/) · [Download sample datasets](https://getnameframe.com/datasets) · [Read the documentation](https://getnameframe.com/docs) · [Apply for a pilot](https://getnameframe.com/pilot)

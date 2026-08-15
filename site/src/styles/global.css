@@ -29,7 +29,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .site-header { width: min(calc(100% - 2rem), var(--max)); margin: 0 auto; min-height: 82px; display: flex; align-items: center; gap: 2rem; border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; font-weight: 760; letter-spacing: -.02em; }
-.brand img { border-radius: 10px; }
+.brand img { flex: 0 0 auto; }
+.brand-copy { display: block; line-height: 1.1; }
+.brand-name { color: var(--ink); font-weight: 760; letter-spacing: .16em; text-transform: uppercase; }
+.brand-name span { color: var(--accent); }
 .brand small { display: block; color: var(--muted); font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .site-header nav { display: flex; gap: 1.4rem; margin-left: auto; }
 .site-header nav a, .footer-links a { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 650; }
@@ -127,9 +130,14 @@ h3 { font-size: clamp(1.35rem, 2vw, 1.7rem); }
 .callout { padding: 1.2rem 1.4rem; border-left: 4px solid var(--accent); background: var(--surface-2); }
 
 .site-footer { width: min(calc(100% - 2rem), var(--max)); margin: 3rem auto 0; padding: 2.5rem 0; display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; border-top: 1px solid var(--line); color: var(--muted); }
+.footer-brand { display: flex; align-items: center; gap: .9rem; }
+.footer-brand img { flex: 0 0 auto; }
 .site-footer p { margin: .3rem 0; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
 .fine-print { grid-column: 1/-1; font-size: .78rem; }
+.brand-showcase { overflow: hidden; margin: 0; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: 0 24px 70px rgba(22, 22, 26, .08); }
+.brand-showcase img { width: 100%; }
+.brand-showcase figcaption { padding: .9rem 1.1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
 
 @media (max-width: 860px) {
   .site-header { flex-wrap: wrap; padding: .8rem 0; gap: .8rem; }
