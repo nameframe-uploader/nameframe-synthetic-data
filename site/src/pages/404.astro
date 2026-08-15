@@ -2,6 +2,6 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { withBase } from '@/lib/data';
 ---
-<BaseLayout title="Page not found · NameFrame" description="The requested NameFrame sample page was not found.">
+<BaseLayout title="Page not found · NameFrame" description="The requested NameFrame sample page was not found." noindex={true}>
   <section class="hero"><p class="kicker">404</p><h1>That frame is not in this sample.</h1><p class="lede">Return to the registry and choose a published dataset.</p><p><a class="button" href={withBase('/datasets/')}>Browse datasets</a></p></section>
 </BaseLayout>

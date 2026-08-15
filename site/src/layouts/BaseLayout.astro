@@ -9,13 +9,15 @@ interface Props {
   description: string;
   image?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
 }
 
 const {
   title,
   description,
   image = withBase('/og/repository-social.png'),
-  jsonLd
+  jsonLd,
+  noindex = false
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
@@ -60,13 +62,14 @@ const structuredData = breadcrumbJsonLd ? [...suppliedJsonLd, breadcrumbJsonLd] 
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#08120f" />
-    <link rel="canonical" href={canonical} />
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="NameFrame Sample Registry" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!noindex && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
