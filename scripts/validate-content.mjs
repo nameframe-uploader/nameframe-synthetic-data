@@ -26,11 +26,24 @@ for (const entry of registry.datasets) {
   if (!Array.isArray(card.classes) || card.classes.length === 0) errors.push(`${entry.slug}: classes must be non-empty`);
   if (!Array.isArray(card.limitations) || card.limitations.length === 0) errors.push(`${entry.slug}: limitations must be non-empty`);
   if (card.source_run?.resolution?.length !== 2) errors.push(`${entry.slug}: resolution must be [width, height]`);
+  if (!Number.isInteger(card.preview?.width) || !Number.isInteger(card.preview?.height)) errors.push(`${entry.slug}: preview dimensions are required`);
   if (!Number.isFinite(card.grade?.score) || card.grade.score < 0 || card.grade.score > 100) errors.push(`${entry.slug}: invalid grade score`);
+  if (!Array.isArray(card.distributions) || card.distributions.length === 0) errors.push(`${entry.slug}: at least one distribution record is required`);
+  for (const [key, value] of Object.entries(card)) {
+    if ((key.endsWith('_url') || key === 'official_page') && typeof value === 'string') {
+      try {
+        const parsed = new URL(value);
+        if (parsed.protocol !== 'https:') errors.push(`${entry.slug}: ${key} must use HTTPS`);
+      } catch {
+        errors.push(`${entry.slug}: malformed ${key}`);
+      }
+    }
+  }
   for (const distribution of card.distributions || []) {
     if (!/^[a-f0-9]{64}$/.test(distribution.sha256)) errors.push(`${entry.slug}: invalid SHA-256 for ${distribution.name}`);
     if (!['available', 'pending_publication'].includes(distribution.download_status)) errors.push(`${entry.slug}: invalid download status`);
     if (distribution.download_status === 'available' && !distribution.official_download_url.startsWith('https://')) errors.push(`${entry.slug}: available archive must use HTTPS`);
+    try { new URL(distribution.official_download_url); } catch { errors.push(`${entry.slug}: malformed distribution URL`); }
   }
   for (const key of ['rgb', 'boxes', 'instances']) {
     const preview = card.preview?.[key];

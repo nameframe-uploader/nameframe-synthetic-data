@@ -3,7 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { withBase } from '@/lib/data';
 ---
 
-<BaseLayout title="Output formats · NameFrame" description="Understand the rendered, recorded and derived formats in public NameFrame synthetic-data samples.">
+<BaseLayout title="YOLO, COCO, Instance Masks and Depth — NameFrame Outputs" description="See representative public examples of the computer-vision dataset formats produced by NameFrame.">
   <header class="page-hero">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={withBase('/')}>Home</a><span>/</span><span>Formats</span></nav>
     <p class="kicker">Output contract</p>
@@ -34,6 +34,7 @@ import { withBase } from '@/lib/data';
         <p>Preview tabs on each dataset page use the same frame identifier. They let a reviewer switch modalities without mistaking two nearby captures for aligned outputs.</p>
         <h2>Not a private schema</h2>
         <p>These examples document public interchange fields only. They do not promise that private production manifests, scene configuration or internal APIs have the same shape.</p>
+        <p><a class="button" href="https://getnameframe.com/docs">Read the NameFrame documentation</a></p>
       </article>
       <aside class="panel side-facts"><h3>Inspection rule</h3><p>Check image dimensions and frame identifiers first. Then compare an object edge across RGB, the identity visualisation and the derived annotation.</p><a class="text-link" href={withBase('/guides/inspect-a-dataset/')}>Use the full guide →</a></aside>
     </div>

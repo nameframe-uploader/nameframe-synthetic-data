@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ModalityViewer from '@/components/ModalityViewer.astro';
-import { datasets, previewUrl, withBase, type DatasetCard } from '@/lib/data';
+import { datasets, previewSrcset, previewUrl, withBase, type DatasetCard } from '@/lib/data';
 
 export function getStaticPaths() {
   return datasets.map((dataset) => ({ params: { slug: dataset.slug }, props: { dataset } }));
@@ -10,35 +10,42 @@ export function getStaticPaths() {
 interface Props { dataset: DatasetCard }
 const { dataset } = Astro.props;
 const datasetUrl = new URL(withBase(`/datasets/${dataset.slug}/`), Astro.site).href;
-const jsonLd = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Dataset',
-    name: `${dataset.name} synthetic dataset sample`,
-    description: dataset.purpose,
-    url: datasetUrl,
-    version: dataset.version,
-    creator: { '@type': 'Organization', name: 'NameFrame', url: 'https://getnameframe.com' },
-    measurementTechnique: 'Unreal Engine synthetic data generation',
-    variableMeasured: dataset.formats,
-    license: new URL(withBase('/terms/'), Astro.site).href,
-    keywords: ['synthetic data', 'computer vision', 'Unreal Engine', ...dataset.classes]
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: new URL(withBase('/'), Astro.site).href },
-      { '@type': 'ListItem', position: 2, name: 'Datasets', item: new URL(withBase('/datasets/'), Astro.site).href },
-      { '@type': 'ListItem', position: 3, name: dataset.name, item: datasetUrl }
-    ]
-  }
-];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: `${dataset.name} synthetic dataset sample`,
+  description: dataset.purpose,
+  url: datasetUrl,
+  version: dataset.version,
+  creator: { '@type': 'Organization', name: 'NameFrame', url: 'https://getnameframe.com' },
+  measurementTechnique: 'Unreal Engine synthetic data generation',
+  variableMeasured: dataset.formats,
+  license: new URL(withBase('/terms/'), Astro.site).href,
+  citation: dataset.citation,
+  isAccessibleForFree: true,
+  keywords: ['synthetic data', 'computer vision', 'Unreal Engine', ...dataset.classes],
+  distribution: dataset.distributions
+    .filter((distribution) => distribution.download_status === 'available')
+    .map((distribution) => ({
+      '@type': 'DataDownload',
+      name: distribution.name,
+      contentUrl: distribution.official_download_url,
+      encodingFormat: 'application/zip',
+      contentSize: distribution.size_label,
+      identifier: `sha256:${distribution.sha256}`
+    }))
+};
+const pageTitle = dataset.slug === 'airbase'
+  ? 'Airbase Aerial Synthetic Dataset — NameFrame'
+  : 'Barnyard Near-Nadir Synthetic Dataset — NameFrame';
+const pageDescription = dataset.slug === 'airbase'
+  ? 'Inspect the NameFrame Airbase capture: aerial RGB, instance segmentation, YOLO/COCO labels, metadata, quality results and known limitations.'
+  : 'Inspect the NameFrame Barnyard capture for low-altitude small-object detection, including annotations, validation findings and limitations.';
 ---
 
 <BaseLayout
-  title={`${dataset.name} synthetic dataset · NameFrame`}
-  description={`${dataset.purpose} Inspect ${dataset.packaged_sample.unique_frames} packaged frames, formats, quality findings and limitations.`}
+  title={pageTitle}
+  description={pageDescription}
   image={withBase(`/og/${dataset.slug}.png`)}
   jsonLd={jsonLd}
 >
@@ -62,7 +69,7 @@ const jsonLd = [
         <ul>{dataset.formats.map((format) => <li>{format}</li>)}</ul>
       </div>
       <aside class="panel side-facts">
-        <p class={`status grade-${dataset.grade.letter.toLowerCase()}`}>Reported grade {dataset.grade.letter} · {dataset.grade.score}/100</p>
+        <p class={`status grade-${dataset.grade.letter.toLowerCase()}`}><a href={dataset.report_url}>Reported grade {dataset.grade.letter} · {dataset.grade.score}/100</a></p>
         <dl class="fact-list">
           <div><dt>Engine</dt><dd>{dataset.engine}</dd></div>
           <div><dt>Map</dt><dd>{dataset.map}</dd></div>
@@ -107,7 +114,15 @@ const jsonLd = [
         <p><a href={dataset.official_page}>Compare with the official product page</a></p>
       </div>
       <aside class="panel side-facts">
-        <img src={previewUrl(dataset, 'boxes')} alt={`${dataset.name} labelled preview`} width="900" height="675" loading="lazy" />
+        <img
+          src={previewUrl(dataset, 'boxes')}
+          srcset={previewSrcset(dataset, 'boxes')}
+          sizes="(max-width: 860px) calc(100vw - 2rem), 330px"
+          alt={`${dataset.name} synthetic-data bounding-box preview`}
+          width={dataset.preview.width}
+          height={dataset.preview.height}
+          loading="lazy"
+        />
         <p class="fine-print">Downscaled preview; use the archive for pixel-level inspection.</p>
       </aside>
     </div>

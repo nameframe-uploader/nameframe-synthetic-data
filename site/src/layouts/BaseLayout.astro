@@ -19,6 +19,37 @@ const {
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const publicPath = Astro.url.pathname.startsWith(basePath)
+  ? Astro.url.pathname.slice(basePath.length)
+  : Astro.url.pathname;
+const pathSegments = publicPath.split('/').filter(Boolean);
+const labelOverrides: Record<string, string> = {
+  datasets: 'Datasets',
+  airbase: 'Airbase',
+  barnyard: 'Barnyard',
+  formats: 'Formats',
+  quality: 'Quality',
+  guides: 'Guides',
+  'inspect-a-dataset': 'Inspect a dataset',
+  about: 'About',
+  terms: 'Terms'
+};
+const breadcrumbJsonLd = pathSegments.length ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL(withBase('/'), Astro.site).href },
+    ...pathSegments.map((segment, index) => ({
+      '@type': 'ListItem',
+      position: index + 2,
+      name: labelOverrides[segment] || segment,
+      item: new URL(withBase(`/${pathSegments.slice(0, index + 1).join('/')}/`), Astro.site).href
+    }))
+  ]
+} : null;
+const suppliedJsonLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const structuredData = breadcrumbJsonLd ? [...suppliedJsonLd, breadcrumbJsonLd] : suppliedJsonLd;
 ---
 
 <!doctype html>
@@ -42,7 +73,7 @@ const socialImage = new URL(image, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
     <title>{title}</title>
-    {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    {structuredData.length > 0 && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

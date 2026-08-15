@@ -4,7 +4,7 @@ import DatasetCard from '@/components/DatasetCard.astro';
 import { datasets, withBase } from '@/lib/data';
 ---
 
-<BaseLayout title="Datasets · NameFrame" description="Browse public NameFrame synthetic-data inspection samples and their dataset cards.">
+<BaseLayout title="Synthetic Computer-Vision Datasets — NameFrame Samples" description="Browse inspectable Unreal Engine synthetic-data samples with dataset cards, formats, quality grades, known limitations and official downloads.">
   <header class="page-hero">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={withBase('/')}>Home</a><span>/</span><span>Datasets</span></nav>
     <p class="kicker">Public registry</p>
@@ -12,6 +12,31 @@ import { datasets, withBase } from '@/lib/data';
     <p class="lede">Small, versioned samples with aligned previews, export examples, checksums and explicit limitations. These are evaluation packs—not training corpora or benchmarks.</p>
   </header>
   <section class="section">
+    <div class="filter-bar" aria-label="Filter datasets by published output">
+      <span>Filter by output</span>
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="yolo" aria-pressed="false">Detection</button>
+      <button type="button" data-filter="instances" aria-pressed="false">Instance segmentation</button>
+      <button type="button" data-filter="depth" aria-pressed="false">Depth</button>
+    </div>
+    <p class="filter-result" aria-live="polite">Showing {datasets.length} datasets.</p>
     <div class="dataset-grid">{datasets.map((dataset) => <DatasetCard dataset={dataset} />)}</div>
   </section>
+
+  <script>
+    const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-dataset-card]')];
+    const result = document.querySelector<HTMLElement>('.filter-result');
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      const filter = button.dataset.filter || 'all';
+      let visible = 0;
+      buttons.forEach((candidate) => candidate.setAttribute('aria-pressed', String(candidate === button)));
+      cards.forEach((card) => {
+        const matches = filter === 'all' || (card.dataset.capabilities || '').includes(filter);
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      if (result) result.textContent = `Showing ${visible} ${visible === 1 ? 'dataset' : 'datasets'}.`;
+    }));
+  </script>
 </BaseLayout>

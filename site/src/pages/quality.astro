@@ -3,7 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { withBase } from '@/lib/data';
 ---
 
-<BaseLayout title="Dataset quality · NameFrame" description="How to interpret NameFrame sample grades, visible failures and known limitations.">
+<BaseLayout title="Synthetic Dataset Quality Evidence — NameFrame Samples" description="Review real NameFrame validation outputs, reported failures and measured dataset characteristics without marketing-only claims.">
   <header class="page-hero">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={withBase('/')}>Home</a><span>/</span><span>Quality</span></nav>
     <p class="kicker">Evidence, not absolutes</p>
@@ -27,6 +27,7 @@ import { withBase } from '@/lib/data';
         <p class="callout">NameFrame does not describe sample labels as “perfect ground truth.” Engine-derived annotations can still encounter visibility thresholds, ID-buffer neighbourhoods, filtering decisions and packaging errors.</p>
         <h2>Before model training</h2>
         <ol><li>Verify hashes and package structure.</li><li>Inspect multiple modalities at object boundaries.</li><li>Measure class and view distributions.</li><li>Check split similarity and duplicate leakage.</li><li>Decide whether the intended domain matches your own.</li></ol>
+        <p><a class="button" href={withBase('/datasets/airbase/#limitations')}>Inspect the published report evidence</a></p>
       </article>
       <aside class="panel side-facts"><p class="status grade-a">Airbase · A · 92.4</p><p>High reported score with a visible missed-box finding and narrow authored camera coverage.</p><p class="status grade-c">Barnyard · C · 78.3</p><p>Penalised for duplicate leakage and class imbalance; its configured archive is also pending publication.</p></aside>
     </div>

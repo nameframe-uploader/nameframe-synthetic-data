@@ -1,14 +1,26 @@
 ---
 import type { DatasetCard as Dataset } from '@/lib/data';
-import { previewUrl, withBase } from '@/lib/data';
+import { previewSrcset, previewUrl, withBase } from '@/lib/data';
 
 interface Props { dataset: Dataset }
 const { dataset } = Astro.props;
 ---
 
-<article class="dataset-card">
+<article
+  class="dataset-card"
+  data-dataset-card
+  data-capabilities={dataset.formats.join(' ').toLowerCase()}
+>
   <a href={withBase(`/datasets/${dataset.slug}/`)} class="card-image">
-    <img src={previewUrl(dataset, 'rgb')} alt={`${dataset.name} RGB sample frame`} width="900" height="675" loading="lazy" />
+    <img
+      src={previewUrl(dataset, 'rgb')}
+      srcset={previewSrcset(dataset, 'rgb')}
+      sizes="(max-width: 860px) calc(100vw - 2rem), 570px"
+      alt={`${dataset.name} RGB synthetic-data sample frame`}
+      width={dataset.preview.width}
+      height={dataset.preview.height}
+      loading="lazy"
+    />
   </a>
   <div class="card-body">
     <div class="eyebrow-row">

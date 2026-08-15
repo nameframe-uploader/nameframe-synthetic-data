@@ -1,6 +1,6 @@
 ---
 import type { DatasetCard } from '@/lib/data';
-import { previewUrl } from '@/lib/data';
+import { previewSrcset, previewUrl } from '@/lib/data';
 
 interface Props { dataset: DatasetCard; heading?: string }
 const { dataset, heading = 'One frame. Aligned outputs.' } = Astro.props;
@@ -34,8 +34,17 @@ const viewerId = `viewer-${dataset.slug}`;
   <div class="viewer-stage">
     {available.map(([key, label, description], index) => (
       <figure id={`${viewerId}-${key}`} data-panel={key} hidden={index !== 0}>
-        <img src={previewUrl(dataset, key)} alt={`${dataset.name}: ${description}`} width="1600" height="900" />
-        <figcaption><strong>{label}</strong> · Frame {dataset.preview.frame_id} · downscaled preview</figcaption>
+        <img
+          src={previewUrl(dataset, key)}
+          srcset={previewSrcset(dataset, key)}
+          sizes="(max-width: 860px) calc(100vw - 2rem), 780px"
+          alt={`${dataset.name}: ${description}`}
+          width={dataset.preview.width}
+          height={dataset.preview.height}
+        />
+        <figcaption>
+          <strong>{label}</strong> · Frame {dataset.preview.frame_id} · {dataset.preview.width}×{dataset.preview.height} downscaled preview · {dataset.map} · dataset v{dataset.version}
+        </figcaption>
       </figure>
     ))}
   </div>

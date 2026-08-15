@@ -24,19 +24,19 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title="NameFrame Synthetic Data Samples"
-  description="Inspect aligned RGB, boxes, instance IDs, depth, metadata and quality reports generated with NameFrame in Unreal Engine."
+  title="NameFrame Synthetic Data Samples for Unreal Engine"
+  description="Inspect RGB, depth, instance masks, YOLO/COCO annotations, metadata and validation reports generated with NameFrame in Unreal Engine."
   jsonLd={jsonLd}
 >
   <section class="hero">
     <div class="hero-grid">
       <div>
-        <p class="kicker">Public sample registry</p>
+        <p class="kicker">Public dataset gallery</p>
         <h1>Inspect what a NameFrame run actually produces.</h1>
-        <p class="lede">Aligned visual outputs, representative annotations, sanitised metadata and honest quality reports—published so computer-vision teams can inspect the evidence before committing to a pilot.</p>
+        <p class="lede">RGB, instance identities, metric depth, derived annotations, metadata and the report that graded the run — presented together, with limitations intact.</p>
         <div class="hero-actions">
           <a class="button" href={withBase('/datasets/')}>Explore datasets</a>
-          <a class="button button-secondary" href={withBase('/guides/inspect-a-dataset/')}>Follow the inspection guide</a>
+          <a class="button button-secondary" href="https://getnameframe.com/product">How NameFrame works</a>
         </div>
       </div>
       <aside class="hero-aside" aria-label="Repository boundary">
@@ -113,7 +113,7 @@ const jsonLd = [
   <section class="section">
     <div class="panel">
       <p class="kicker">Terms before download</p>
-      <h2>Know what the samples permit.</h2>
+      <h2>Need a dataset for your scene? Apply for a pilot.</h2>
       <p class="lede">Sample data is available for evaluation, research and internal prototyping. Product code is not included, third-party asset terms may still apply, and redistribution is limited by the published terms.</p>
       <div class="hero-actions">
         <a class="button button-secondary" href={withBase('/terms/')}>Read data terms</a>

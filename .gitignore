@@ -3,6 +3,7 @@ site/dist/
 site/.astro/
 site/public/previews/
 site/public/og/
+site/public/sitemap.xml
 *.log
 .DS_Store
 Thumbs.db

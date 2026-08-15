@@ -14,6 +14,8 @@ const credentialPatterns = [
   new RegExp('github' + '_pat_[A-Za-z0-9_]{20,}'),
   new RegExp('s' + 'k-[A-Za-z0-9_-]{20,}')
 ];
+const publicEmails = new Set(['hello@getnameframe.com']);
+const localHostPattern = new RegExp(`https?://(?:${'local' + 'host'}|127\\.0\\.0\\.1|0\\.0\\.0\\.0)(?::\\d+)?`, 'i');
 
 async function walk(directory) {
   const files = [];
@@ -38,8 +40,12 @@ for (const absolute of files) {
   if (info.size > 1_000_000 || /\.(png|jpe?g|webp|gif|ico|woff2?)$/i.test(relative)) continue;
   const text = await readFile(absolute, 'utf8');
   if (/(?:[A-Za-z]:\\Users\\|\/Users\/[^/]+\/|\/home\/[^/]+\/)/.test(text)) errors.push(`${relative}: contains a local absolute path`);
+  if (localHostPattern.test(text)) errors.push(`${relative}: contains an internal or loopback hostname`);
   if (/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/.test(text)) errors.push(`${relative}: contains a private key marker`);
   if (credentialPatterns.some((pattern) => pattern.test(text))) errors.push(`${relative}: contains a credential-like token`);
+  for (const match of text.matchAll(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi)) {
+    if (!publicEmails.has(match[0].toLowerCase())) errors.push(`${relative}: contains a non-public email address`);
+  }
 }
 
 if (errors.length) {

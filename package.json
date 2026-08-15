@@ -10,11 +10,11 @@
     "dev": "npm run dev --workspace site",
     "lint": "node scripts/lint.mjs",
     "check": "npm run content:check && npm run check --workspace site",
-    "content:check": "node scripts/content-policy.mjs && node scripts/validate-content.mjs",
+    "content:check": "node scripts/content-policy.mjs && node scripts/validate-content.mjs && node scripts/validate-site-source.mjs",
     "prepare:assets": "node scripts/prepare-assets.mjs",
     "build": "npm run prepare:assets && npm run build --workspace site",
     "preview": "npm run preview --workspace site",
-    "test:links": "node scripts/check-links.mjs",
+    "test:links": "node scripts/check-built-output.mjs && node scripts/check-links.mjs",
     "test": "npm run lint && npm run check && npm run build && npm run test:links"
   }
 }

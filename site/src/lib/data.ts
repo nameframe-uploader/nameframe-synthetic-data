@@ -39,6 +39,8 @@ export type DatasetCard = {
   preview: {
     frame_id: string;
     downscaled: boolean;
+    width: number;
+    height: number;
     rgb: string;
     boxes: string;
     instances: string;
@@ -75,4 +77,12 @@ export function previewUrl(dataset: DatasetCard, key: 'rgb' | 'boxes' | 'instanc
   const filename = dataset.preview[key];
   if (!filename) return null;
   return withBase(`/previews/${dataset.slug}/${filename.split('/').at(-1)}`);
+}
+
+export function previewSrcset(dataset: DatasetCard, key: 'rgb' | 'boxes' | 'instances' | 'depth') {
+  if (!dataset.preview[key]) return undefined;
+  return [640, 960, 1600]
+    .filter((width) => width <= dataset.preview.width)
+    .map((width) => `${withBase(`/previews/${dataset.slug}/responsive/${key}-${width}.webp`)} ${width}w`)
+    .join(', ');
 }

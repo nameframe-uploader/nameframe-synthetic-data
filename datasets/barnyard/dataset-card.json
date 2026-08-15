@@ -46,6 +46,8 @@
   "preview": {
     "frame_id": "plugin_000000",
     "downscaled": true,
+    "width": 900,
+    "height": 675,
     "rgb": "preview/barnyard-rgb.webp",
     "boxes": "preview/barnyard-boxes.webp",
     "instances": "preview/barnyard-instances.webp",
