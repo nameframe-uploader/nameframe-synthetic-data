@@ -33,9 +33,9 @@ for (const slug of ['airbase', 'barnyard']) {
   const source = path.join(root, 'datasets', slug, card.preview.rgb);
   const overlay = Buffer.from(`
     <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="30%" stop-color="#08120f" stop-opacity="0"/><stop offset="100%" stop-color="#08120f" stop-opacity=".95"/></linearGradient></defs>
+      <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="30%" stop-color="#0d0d10" stop-opacity="0"/><stop offset="100%" stop-color="#0d0d10" stop-opacity=".95"/></linearGradient></defs>
       <rect width="1200" height="630" fill="url(#g)"/>
-      <text x="58" y="450" fill="#8df5a9" font-family="Arial, sans-serif" font-weight="700" font-size="22" letter-spacing="3">NAMEFRAME SAMPLE · VERSION ${escapeXml(card.version)}</text>
+      <text x="58" y="450" fill="#eb5570" font-family="Arial, sans-serif" font-weight="700" font-size="22" letter-spacing="3">NAMEFRAME SAMPLE · VERSION ${escapeXml(card.version)}</text>
       <text x="58" y="520" fill="#ffffff" font-family="Arial, sans-serif" font-weight="700" font-size="56">${escapeXml(card.name)}</text>
       <text x="58" y="565" fill="#ffffff" font-family="Arial, sans-serif" font-size="24">${escapeXml(card.purpose)}</text>
       <text x="1140" y="610" text-anchor="end" fill="#ffffff" font-family="Arial, sans-serif" font-size="23">${card.packaged_sample.unique_frames} frames · Grade ${card.grade.letter}</text>
@@ -53,16 +53,16 @@ const [rgbPane, instancesPane, depthPane] = await Promise.all([
 ]);
 const homeOverlay = Buffer.from(`
   <svg width="1280" height="640" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="470" width="1280" height="170" fill="#08120f" fill-opacity=".92"/>
-    <rect x="0" y="0" width="1280" height="640" fill="none" stroke="#8df5a9" stroke-width="4"/>
-    <text x="24" y="42" fill="#08120f" stroke="#ffffff" stroke-width=".5" font-family="Arial, sans-serif" font-weight="700" font-size="22">RGB</text>
+    <rect x="0" y="470" width="1280" height="170" fill="#0d0d10" fill-opacity=".94"/>
+    <rect x="0" y="0" width="1280" height="640" fill="none" stroke="#eb5570" stroke-width="4"/>
+    <text x="24" y="42" fill="#0d0d10" stroke="#ffffff" stroke-width=".5" font-family="Arial, sans-serif" font-weight="700" font-size="22">RGB</text>
     <text x="744" y="42" fill="#ffffff" font-family="Arial, sans-serif" font-weight="700" font-size="22">INSTANCE IDs</text>
     <text x="1024" y="42" fill="#ffffff" font-family="Arial, sans-serif" font-weight="700" font-size="22">DEPTH</text>
-    <text x="48" y="520" fill="#8df5a9" font-family="Arial, sans-serif" font-weight="700" font-size="22" letter-spacing="4">NAMEFRAME · PUBLIC SAMPLE REGISTRY</text>
+    <text x="48" y="520" fill="#eb5570" font-family="Arial, sans-serif" font-weight="700" font-size="22" letter-spacing="4">NAMEFRAME · PUBLIC SAMPLE REGISTRY</text>
     <text x="48" y="590" fill="#ffffff" font-family="Arial, sans-serif" font-weight="700" font-size="52">One capture. Aligned outputs.</text>
     <text x="1230" y="590" text-anchor="end" fill="#ffffff" font-family="Arial, sans-serif" font-size="24">Airbase · v1.0</text>
   </svg>`);
-await sharp({ create: { width: 1280, height: 640, channels: 3, background: '#08120f' } })
+await sharp({ create: { width: 1280, height: 640, channels: 3, background: '#0d0d10' } })
   .composite([
     { input: rgbPane, left: 0, top: 0 },
     { input: instancesPane, left: 720, top: 0 },
