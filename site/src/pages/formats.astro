@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/data';
+---
+
+<BaseLayout title="Output formats · NameFrame" description="Understand the rendered, recorded and derived formats in public NameFrame synthetic-data samples.">
+  <header class="page-hero">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={withBase('/')}>Home</a><span>/</span><span>Formats</span></nav>
+    <p class="kicker">Output contract</p>
+    <h1>Formats with traceable meaning.</h1>
+    <p class="lede">A modality says what was recorded. An annotation says what was derived. Keeping that distinction visible makes inspection easier and claims more precise.</p>
+  </header>
+  <section class="section">
+    <div class="format-grid">
+      <article class="panel"><p class="status">Rendered</p><h3>RGB</h3><p>The image presented to a model: lighting, materials, post-processing and scene composition in a conventional image format.</p></article>
+      <article class="panel"><p class="status">Recorded truth</p><h3>Instance IDs</h3><p>A per-pixel identity buffer used to distinguish labelled object instances. Gallery images are colour visualisations, not raw IDs.</p></article>
+      <article class="panel"><p class="status">Recorded truth</p><h3>Metric depth</h3><p>Per-pixel distance rendered as a viewable preview. Only datasets that publish this modality advertise it.</p></article>
+      <article class="panel"><p class="status">Derived</p><h3>YOLO boxes</h3><p>Normalised class and bounding-box rows suitable for inspection or a standard detection loader.</p></article>
+      <article class="panel"><p class="status">Derived</p><h3>COCO instances</h3><p>Image, category and annotation records with boxes, areas and segmentation data where included.</p></article>
+      <article class="panel"><p class="status">Evidence</p><h3>Metadata & reports</h3><p>Sanitised capture context, versioning, archive checksums, quality findings and known limitations.</p></article>
+    </div>
+  </section>
+  <section class="section">
+    <div class="content-grid">
+      <article class="prose">
+        <h2>Representative files</h2>
+        <p>The repository includes deliberately small, sanitised examples. They demonstrate common interchange structure without exposing the production pipeline schema.</p>
+        <ul>
+          <li><a href="https://github.com/nameframe-uploader/nameframe-synthetic-data/tree/main/samples/yolo">YOLO label example</a></li>
+          <li><a href="https://github.com/nameframe-uploader/nameframe-synthetic-data/tree/main/samples/coco">COCO annotation example</a></li>
+          <li><a href="https://github.com/nameframe-uploader/nameframe-synthetic-data/tree/main/samples/metadata">Public metadata example</a></li>
+        </ul>
+        <h2>Alignment</h2>
+        <p>Preview tabs on each dataset page use the same frame identifier. They let a reviewer switch modalities without mistaking two nearby captures for aligned outputs.</p>
+        <h2>Not a private schema</h2>
+        <p>These examples document public interchange fields only. They do not promise that private production manifests, scene configuration or internal APIs have the same shape.</p>
+      </article>
+      <aside class="panel side-facts"><h3>Inspection rule</h3><p>Check image dimensions and frame identifiers first. Then compare an object edge across RGB, the identity visualisation and the derived annotation.</p><a class="text-link" href={withBase('/guides/inspect-a-dataset/')}>Use the full guide →</a></aside>
+    </div>
+  </section>
+</BaseLayout>

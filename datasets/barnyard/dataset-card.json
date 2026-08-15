@@ -1,0 +1,58 @@
+{
+  "schema_version": "public-dataset-card-v1",
+  "slug": "barnyard",
+  "name": "Barnyard",
+  "version": "1.0",
+  "purpose": "Small-object detection inspection from near-nadir, low-altitude viewpoints.",
+  "engine": "Unreal Engine 5.8",
+  "map": "Map_BarnEnvironment",
+  "seed": 20260814,
+  "source_run": {
+    "frames": 300,
+    "labelled_instances": 14962,
+    "resolution": [1280, 960]
+  },
+  "packaged_sample": {
+    "unique_frames": 12,
+    "archive_frame_records": 12,
+    "labelled_instances_across_archives": 732,
+    "note": "The configured official archive was not publicly reachable when this card was verified."
+  },
+  "classes": ["person", "redbarrel", "traffic_cone", "box", "haybayle", "tractor", "bucket"],
+  "formats": ["RGB", "YOLO boxes", "COCO instances", "instance ID buffer", "sanitised per-frame metadata", "validation reports"],
+  "camera_policy": "Near-nadir views from 18 to 45 metres altitude.",
+  "grade": { "letter": "C", "score": 78.3 },
+  "report_url": "https://getnameframe.com/datasets/barnyard",
+  "limitations": [
+    "Near-duplicate frames landed in different splits; the validator penalised split leakage.",
+    "The class distribution is imbalanced enough to receive a validator penalty.",
+    "Near-nadir, low-altitude capture intentionally limits viewpoint diversity and produces small objects.",
+    "Twelve packaged frames from a three-hundred-frame source run are suitable for inspection, not benchmarking.",
+    "The configured official archive returned HTTP 404 on 2026-08-15, so this card does not expose an active download link."
+  ],
+  "distributions": [
+    {
+      "name": "Barnyard aerial sample",
+      "version": "1",
+      "frames": 12,
+      "labelled_instances": 732,
+      "size_bytes": 26415462,
+      "size_label": "25 MB",
+      "sha256": "f1828d704a9e9577cba8296c73e5b1ea2311d9e4b4a4d55a54e9dce5559080e6",
+      "official_download_url": "https://datasets.getnameframe.com/nameframe-barnyard-aerial-v1.zip",
+      "download_status": "pending_publication"
+    }
+  ],
+  "preview": {
+    "frame_id": "plugin_000000",
+    "downscaled": true,
+    "rgb": "preview/barnyard-rgb.webp",
+    "boxes": "preview/barnyard-boxes.webp",
+    "instances": "preview/barnyard-instances.webp",
+    "depth": null
+  },
+  "licensing": "NameFrame sample terms apply. Depicted Unreal environment and prop content may remain subject to separate third-party terms.",
+  "citation": "NameFrame. Barnyard synthetic dataset, version 1.0, Map_BarnEnvironment, seed 20260814 (2026).",
+  "official_page": "https://getnameframe.com/datasets/barnyard",
+  "last_verified": "2026-08-15"
+}

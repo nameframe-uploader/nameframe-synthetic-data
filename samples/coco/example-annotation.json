@@ -1,0 +1,37 @@
+{
+  "info": {
+    "description": "Sanitised NameFrame COCO interchange example",
+    "version": "1.0"
+  },
+  "images": [
+    {
+      "id": 1,
+      "file_name": "example_rgb.png",
+      "width": 1920,
+      "height": 1080
+    }
+  ],
+  "categories": [
+    { "id": 1, "name": "person", "supercategory": "object" },
+    { "id": 2, "name": "car", "supercategory": "object" },
+    { "id": 3, "name": "tank", "supercategory": "object" }
+  ],
+  "annotations": [
+    {
+      "id": 1,
+      "image_id": 1,
+      "category_id": 1,
+      "bbox": [759, 516, 66, 186],
+      "area": 12276,
+      "iscrowd": 0
+    },
+    {
+      "id": 2,
+      "image_id": 1,
+      "category_id": 2,
+      "bbox": [1172, 631, 274, 117],
+      "area": 32058,
+      "iscrowd": 0
+    }
+  ]
+}

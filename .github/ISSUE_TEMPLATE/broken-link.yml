@@ -1,0 +1,31 @@
+name: Broken link or download
+description: Report a public page, preview or archive that cannot be reached.
+title: "[link] "
+labels: [documentation]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      placeholder: https://...
+    validations:
+      required: true
+  - type: input
+    id: dataset
+    attributes:
+      label: Dataset and version
+      placeholder: Airbase 1.0
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened?
+      description: Include the HTTP status, browser message or checksum result.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safe
+    attributes:
+      label: Public information only
+      options:
+        - label: I have not included credentials, private customer data or proprietary NameFrame implementation details.
+          required: true

@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import DatasetCard from '@/components/DatasetCard.astro';
+import { datasets, withBase } from '@/lib/data';
+---
+
+<BaseLayout title="Datasets · NameFrame" description="Browse public NameFrame synthetic-data inspection samples and their dataset cards.">
+  <header class="page-hero">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={withBase('/')}>Home</a><span>/</span><span>Datasets</span></nav>
+    <p class="kicker">Public registry</p>
+    <h1>Datasets you can inspect.</h1>
+    <p class="lede">Small, versioned samples with aligned previews, export examples, checksums and explicit limitations. These are evaluation packs—not training corpora or benchmarks.</p>
+  </header>
+  <section class="section">
+    <div class="dataset-grid">{datasets.map((dataset) => <DatasetCard dataset={dataset} />)}</div>
+  </section>
+</BaseLayout>

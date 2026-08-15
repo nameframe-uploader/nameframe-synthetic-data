@@ -1,0 +1,68 @@
+{
+  "schema_version": "public-dataset-card-v1",
+  "slug": "airbase",
+  "name": "Airbase",
+  "version": "1.0",
+  "purpose": "Aerial detection and instance-segmentation inspection in a cluttered ground scene.",
+  "engine": "Unreal Engine 5.8",
+  "map": "Map_Airbase_Demo",
+  "seed": 67,
+  "source_run": {
+    "frames": 40,
+    "labelled_instances": 4378,
+    "resolution": [1920, 1080]
+  },
+  "packaged_sample": {
+    "unique_frames": 13,
+    "archive_frame_records": 15,
+    "labelled_instances_across_archives": 2375,
+    "note": "Two frames occur in both distributions, so archive frame and instance totals are not unique-run totals."
+  },
+  "classes": ["person", "car", "tank", "container", "crate", "barrel"],
+  "formats": ["RGB", "YOLO boxes", "COCO instances", "instance ID buffer", "metric depth", "sanitised per-frame metadata", "validation reports"],
+  "camera_policy": "Four authored camera zones looking at one target, with scene weather.",
+  "grade": { "letter": "A", "score": 92.4 },
+  "report_url": "https://getnameframe.com/datasets/airbase",
+  "limitations": [
+    "The verification pass reported three visible people without a published bounding box among ninety people inspected; the failing check ships in the sample report.",
+    "Four camera zones aimed at one target cover a narrow band of viewing angles and distances.",
+    "The class distribution is uneven because the source scene is uneven.",
+    "Thirteen unique packaged frames from a forty-frame source run are suitable for inspection, not benchmarking."
+  ],
+  "distributions": [
+    {
+      "name": "Airbase detection sample",
+      "version": "1",
+      "frames": 12,
+      "labelled_instances": 1813,
+      "size_bytes": 51818788,
+      "size_label": "49 MB",
+      "sha256": "ac54025db5789bc58e62a54474b3c0ced5563a64c984baf01e155a7e71f17f94",
+      "official_download_url": "https://datasets.getnameframe.com/nameframe-airbase-detection-v1.zip",
+      "download_status": "available"
+    },
+    {
+      "name": "Airbase every-modality sample",
+      "version": "1",
+      "frames": 3,
+      "labelled_instances": 562,
+      "size_bytes": 15114367,
+      "size_label": "14 MB",
+      "sha256": "c52922f1ee9db49abd42e00b3ddc25f19dfea83bd4ac0ad01362267d90769f22",
+      "official_download_url": "https://datasets.getnameframe.com/nameframe-airbase-modalities-v1.zip",
+      "download_status": "available"
+    }
+  ],
+  "preview": {
+    "frame_id": "plugin_000000",
+    "downscaled": true,
+    "rgb": "preview/airbase-rgb.webp",
+    "boxes": "preview/airbase-boxes.webp",
+    "instances": "preview/airbase-instances.webp",
+    "depth": "preview/airbase-depth.webp"
+  },
+  "licensing": "NameFrame sample terms apply. Depicted Unreal environment and prop content may remain subject to separate third-party terms.",
+  "citation": "NameFrame. Airbase synthetic dataset, version 1.0, Map_Airbase_Demo, seed 67 (2026).",
+  "official_page": "https://getnameframe.com/datasets/airbase",
+  "last_verified": "2026-08-15"
+}

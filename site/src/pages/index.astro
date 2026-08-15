@@ -1,0 +1,124 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ModalityViewer from '@/components/ModalityViewer.astro';
+import DatasetCard from '@/components/DatasetCard.astro';
+import { datasets, withBase } from '@/lib/data';
+
+const airbase = datasets.find((dataset) => dataset.slug === 'airbase')!;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'NameFrame',
+    url: 'https://getnameframe.com',
+    logo: new URL(withBase('/brand/nameframe-mark.png'), Astro.site).href
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'NameFrame Synthetic Data Samples',
+    url: new URL(withBase('/'), Astro.site).href,
+    description: 'Public synthetic-dataset samples and dataset cards generated with NameFrame in Unreal Engine.'
+  }
+];
+---
+
+<BaseLayout
+  title="NameFrame Synthetic Data Samples"
+  description="Inspect aligned RGB, boxes, instance IDs, depth, metadata and quality reports generated with NameFrame in Unreal Engine."
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">Public sample registry</p>
+        <h1>Inspect what a NameFrame run actually produces.</h1>
+        <p class="lede">Aligned visual outputs, representative annotations, sanitised metadata and honest quality reports—published so computer-vision teams can inspect the evidence before committing to a pilot.</p>
+        <div class="hero-actions">
+          <a class="button" href={withBase('/datasets/')}>Explore datasets</a>
+          <a class="button button-secondary" href={withBase('/guides/inspect-a-dataset/')}>Follow the inspection guide</a>
+        </div>
+      </div>
+      <aside class="hero-aside" aria-label="Repository boundary">
+        <p class="status">Outputs, not internals</p>
+        <p>This public companion repository contains sample data and documentation. The NameFrame plugin, pipeline source, binaries and private implementation stay in the product repository.</p>
+      </aside>
+    </div>
+  </section>
+
+  <ModalityViewer dataset={airbase} />
+
+  <section class="section" aria-labelledby="datasets-heading">
+    <div class="section-head">
+      <div>
+        <p class="kicker">Dataset cards</p>
+        <h2 id="datasets-heading">Start with a documented sample.</h2>
+      </div>
+      <p>Every card separates source-run statistics from the smaller downloadable inspection pack and names the known limitations.</p>
+    </div>
+    <div class="dataset-grid">
+      {datasets.map((dataset) => <DatasetCard dataset={dataset} />)}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="boundary-heading">
+    <div class="section-head">
+      <div>
+        <p class="kicker">Clear boundary</p>
+        <h2 id="boundary-heading">Public evidence. Private product.</h2>
+      </div>
+      <p>Repository visibility is not a software licence. NameFrame remains proprietary.</p>
+    </div>
+    <div class="boundary-grid">
+      <article class="panel">
+        <h3>Published</h3>
+        <ul><li>Downscaled aligned previews</li><li>Representative YOLO and COCO snippets</li><li>Sanitised frame metadata</li><li>Dataset cards and quality findings</li></ul>
+      </article>
+      <article class="panel">
+        <h3>Not published</h3>
+        <ul><li>Plugin and pipeline source</li><li>Unreal projects or binaries</li><li>Internal validation algorithms</li><li>Private APIs, schemas or configuration</li></ul>
+      </article>
+      <article class="panel">
+        <h3>Use</h3>
+        <p>The samples are for evaluation, research and internal prototyping under the published data terms. They are not benchmarks and carry no performance warranty.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="failure-heading">
+    <article class="panel failure">
+      <p class="status">Visible failed check</p>
+      <h2 id="failure-heading">A strong report should show what went wrong.</h2>
+      <p>Airbase scored 92.4/100, but its verification pass still reported three visible people without a published bounding box among ninety people inspected. We publish that finding because quality scores without failure context are not useful evidence.</p>
+      <a class="text-link" href={withBase('/datasets/airbase/#limitations')}>Read the Airbase limitations →</a>
+    </article>
+  </section>
+
+  <section class="section" aria-labelledby="formats-heading">
+    <div class="section-head">
+      <div>
+        <p class="kicker">Outputs</p>
+        <h2 id="formats-heading">Built for inspection and handoff.</h2>
+      </div>
+      <p>Visual modalities are aligned to a frame; derived exports are documented separately from recorded truth.</p>
+    </div>
+    <div class="format-grid">
+      <article class="panel"><h3>Rendered & recorded</h3><p>RGB imagery, per-instance identity buffers and metric depth where a dataset publishes that modality.</p></article>
+      <article class="panel"><h3>Derived annotations</h3><p>YOLO detection labels, COCO instances and visual overlays produced from recorded scene truth.</p></article>
+      <article class="panel"><h3>Evidence</h3><p>Sanitised frame metadata, validation summaries, known limitations, archive sizes and SHA-256 hashes.</p></article>
+    </div>
+    <p><a class="text-link" href={withBase('/formats/')}>Explore formats and examples →</a></p>
+  </section>
+
+  <section class="section">
+    <div class="panel">
+      <p class="kicker">Terms before download</p>
+      <h2>Know what the samples permit.</h2>
+      <p class="lede">Sample data is available for evaluation, research and internal prototyping. Product code is not included, third-party asset terms may still apply, and redistribution is limited by the published terms.</p>
+      <div class="hero-actions">
+        <a class="button button-secondary" href={withBase('/terms/')}>Read data terms</a>
+        <a class="button" href="https://getnameframe.com/pilot">Apply for a pilot</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

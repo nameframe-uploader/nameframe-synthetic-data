@@ -1,0 +1,53 @@
+---
+import type { DatasetCard } from '@/lib/data';
+import { previewUrl } from '@/lib/data';
+
+interface Props { dataset: DatasetCard; heading?: string }
+const { dataset, heading = 'One frame. Aligned outputs.' } = Astro.props;
+const options = [
+  ['rgb', 'RGB', 'Rendered input image'],
+  ['boxes', 'Boxes', 'Derived detection boxes'],
+  ['instances', 'Instances', 'Per-instance identity visualisation'],
+  ['depth', 'Depth', 'Metric-depth visualisation']
+] as const;
+const available = options.filter(([key]) => previewUrl(dataset, key));
+const viewerId = `viewer-${dataset.slug}`;
+---
+
+<section class="modality-viewer" data-modality-viewer>
+  <div class="viewer-copy">
+    <p class="kicker">Aligned modalities</p>
+    <h2>{heading}</h2>
+    <p>Switch the display without changing the frame. Each view is generated from the same capture.</p>
+    <div class="tab-list" role="tablist" aria-label={`${dataset.name} output modalities`}>
+      {available.map(([key, label], index) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={index === 0 ? 'true' : 'false'}
+          aria-controls={`${viewerId}-${key}`}
+          data-tab={key}
+        >{label}</button>
+      ))}
+    </div>
+  </div>
+  <div class="viewer-stage">
+    {available.map(([key, label, description], index) => (
+      <figure id={`${viewerId}-${key}`} data-panel={key} hidden={index !== 0}>
+        <img src={previewUrl(dataset, key)} alt={`${dataset.name}: ${description}`} width="1600" height="900" />
+        <figcaption><strong>{label}</strong> · Frame {dataset.preview.frame_id} · downscaled preview</figcaption>
+      </figure>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-modality-viewer]').forEach((viewer) => {
+    const tabs = [...viewer.querySelectorAll<HTMLButtonElement>('[data-tab]')];
+    const panels = [...viewer.querySelectorAll<HTMLElement>('[data-panel]')];
+    tabs.forEach((tab) => tab.addEventListener('click', () => {
+      tabs.forEach((candidate) => candidate.setAttribute('aria-selected', String(candidate === tab)));
+      panels.forEach((panel) => { panel.hidden = panel.dataset.panel !== tab.dataset.tab; });
+    }));
+  });
+</script>

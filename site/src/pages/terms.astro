@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/data';
+---
+
+<BaseLayout title="Sample data terms · NameFrame" description="Plain-language summary and controlling terms for public NameFrame sample datasets.">
+  <header class="page-hero">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={withBase('/')}>Home</a><span>/</span><span>Terms</span></nav>
+    <p class="kicker">Use and attribution</p>
+    <h1>Sample data terms.</h1>
+    <p class="lede">A readable summary of the permitted evaluation use and the boundaries that remain. The repository files are the controlling text.</p>
+  </header>
+  <section class="section">
+    <div class="content-grid">
+      <article class="prose">
+        <h2>Permitted use</h2>
+        <p>Subject to the full terms, the published sample data may be used for evaluation, research, education and internal prototyping.</p>
+        <h2>Important restrictions</h2>
+        <p>The samples may not be presented as a benchmark or official real-world dataset, used to imply endorsement, or used to reverse engineer the NameFrame product. Software rights are not granted.</p>
+        <h2>Third-party assets</h2>
+        <p>Unreal environments, props, textures or other depicted content may remain subject to separate third-party terms. Those rights are not expanded by this repository.</p>
+        <h2>No warranty</h2>
+        <p>Samples are provided for inspection without a guarantee of completeness, fitness, annotation accuracy or model performance. Known limitations are published on each card.</p>
+        <h2>Controlling files</h2>
+        <ul><li><a href="https://github.com/nameframe-uploader/nameframe-synthetic-data/blob/main/DATA_TERMS.md">DATA_TERMS.md</a></li><li><a href="https://github.com/nameframe-uploader/nameframe-synthetic-data/blob/main/LICENSE.md">LICENSE.md</a></li><li><a href="https://github.com/nameframe-uploader/nameframe-synthetic-data/blob/main/CITATION.cff">CITATION.cff</a></li></ul>
+        <p class="callout">The legal owner name and depicted-asset rights remain explicit release checks. See the repository launch checklist for status.</p>
+      </article>
+      <aside class="panel side-facts"><h3>Questions</h3><p>For sample-use or pilot questions, contact <a href="mailto:hello@getnameframe.com">hello@getnameframe.com</a>.</p></aside>
+    </div>
+  </section>
+</BaseLayout>

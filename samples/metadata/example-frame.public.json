@@ -1,0 +1,21 @@
+{
+  "schema_version": "public-frame-metadata-v1",
+  "dataset": {
+    "slug": "airbase",
+    "version": "1.0",
+    "map": "Map_Airbase_Demo",
+    "engine": "Unreal Engine 5.8",
+    "seed": 67
+  },
+  "frame": {
+    "id": "plugin_000000",
+    "width": 1920,
+    "height": 1080,
+    "modalities": ["rgb", "instance_id", "depth"],
+    "annotation_exports": ["yolo_detection", "coco_instances"]
+  },
+  "provenance": {
+    "generator": "NameFrame",
+    "sanitised_for_publication": true
+  }
+}

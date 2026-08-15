@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/data';
+---
+
+<BaseLayout title="Inspect a synthetic dataset · NameFrame" description="A practical inspection workflow for public NameFrame synthetic-data samples.">
+  <header class="page-hero">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={withBase('/')}>Home</a><span>/</span><span>Guides</span><span>/</span><span>Inspect a dataset</span></nav>
+    <p class="kicker">Practical guide</p>
+    <h1>Inspect a sample before you trust it.</h1>
+    <p class="lede">A short workflow for moving from a dataset card to visual alignment, archive integrity and task-specific risk.</p>
+  </header>
+  <section class="section">
+    <article class="prose">
+      <h2>1. Read the dataset card</h2>
+      <p>Confirm the map, seed, engine version, resolution and capture policy. Keep source-run totals separate from the much smaller public sample totals.</p>
+      <h2>2. Start with aligned previews</h2>
+      <p>Switch between RGB, boxes, instance IDs and depth for the same frame. Look at thin objects, occlusion boundaries, distant people and objects cropped by the image edge.</p>
+      <h2>3. Verify the archive</h2>
+      <p>Download only from the URL on the dataset page and calculate SHA-256 before extracting.</p>
+      <pre><code>certutil -hashfile nameframe-airbase-detection-v1.zip SHA256</code></pre>
+      <p>On macOS or Linux:</p>
+      <pre><code>shasum -a 256 nameframe-airbase-detection-v1.zip</code></pre>
+      <h2>4. Sample the annotations</h2>
+      <p>Open labels across classes and scales. Check that normalised YOLO values remain between zero and one, category IDs resolve in COCO, image dimensions match and instance areas are plausible.</p>
+      <h2>5. Audit coverage and splits</h2>
+      <p>Count classes, camera elevations, object sizes and lighting conditions. Use perceptual similarity—not filenames alone—to detect near-duplicate leakage between splits.</p>
+      <h2>6. Reconcile the quality report</h2>
+      <p>A score should not override a visible failure. Read every limitation and decide which findings affect your intended model or evaluation.</p>
+      <h2>7. Record your decision</h2>
+      <p>Pin the dataset version and hash, document any exclusions and retain the original sample card beside your experiment.</p>
+      <p class="callout">These samples help evaluate NameFrame outputs. They are not benchmarks and do not establish performance on real-world data.</p>
+    </article>
+  </section>
+</BaseLayout>

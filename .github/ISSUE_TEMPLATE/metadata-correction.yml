@@ -1,0 +1,32 @@
+name: Dataset metadata correction
+description: Propose an evidence-backed correction to a public dataset card.
+title: "[metadata] "
+labels: [documentation]
+body:
+  - type: input
+    id: dataset
+    attributes:
+      label: Dataset and version
+      placeholder: Barnyard 1.0
+    validations:
+      required: true
+  - type: input
+    id: field
+    attributes:
+      label: Field or file
+      placeholder: grade.score in datasets/barnyard/dataset-card.json
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Proposed correction and public evidence
+    validations:
+      required: true
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Submission rights
+      options:
+        - label: I have the right to submit this material and it contains no confidential or proprietary information.
+          required: true

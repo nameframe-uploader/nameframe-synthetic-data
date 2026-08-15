@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "Please cite the exact NameFrame dataset version, map and seed used."
+title: "NameFrame Synthetic Data Samples"
+type: dataset
+version: 1.0.0
+date-released: 2026-08-15
+authors:
+  - name: "NameFrame"
+url: "https://nameframe-uploader.github.io/nameframe-synthetic-data/"
+repository-code: "https://github.com/nameframe-uploader/nameframe-synthetic-data"
+license: "LicenseRef-NameFrame-Public-Materials-1.0"
+keywords:
+  - synthetic data
+  - computer vision
+  - Unreal Engine
+  - object detection
+  - instance segmentation
+  - depth
+contact:
+  - email: hello@getnameframe.com

@@ -1,0 +1,28 @@
+{
+  "schema_version": "public-dataset-registry-v1",
+  "last_verified": "2026-08-15",
+  "datasets": [
+    {
+      "slug": "airbase",
+      "name": "Airbase",
+      "version": "1.0",
+      "card": "datasets/airbase/dataset-card.json",
+      "source_frames": 40,
+      "packaged_unique_frames": 13,
+      "classes": 6,
+      "resolution": [1920, 1080],
+      "grade": { "letter": "A", "score": 92.4 }
+    },
+    {
+      "slug": "barnyard",
+      "name": "Barnyard",
+      "version": "1.0",
+      "card": "datasets/barnyard/dataset-card.json",
+      "source_frames": 300,
+      "packaged_unique_frames": 12,
+      "classes": 7,
+      "resolution": [1280, 960],
+      "grade": { "letter": "C", "score": 78.3 }
+    }
+  ]
+}

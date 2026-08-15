@@ -1,0 +1,28 @@
+---
+import type { DatasetCard as Dataset } from '@/lib/data';
+import { previewUrl, withBase } from '@/lib/data';
+
+interface Props { dataset: Dataset }
+const { dataset } = Astro.props;
+---
+
+<article class="dataset-card">
+  <a href={withBase(`/datasets/${dataset.slug}/`)} class="card-image">
+    <img src={previewUrl(dataset, 'rgb')} alt={`${dataset.name} RGB sample frame`} width="900" height="675" loading="lazy" />
+  </a>
+  <div class="card-body">
+    <div class="eyebrow-row">
+      <span class={`grade grade-${dataset.grade.letter.toLowerCase()}`}>Grade {dataset.grade.letter} · {dataset.grade.score}</span>
+      <span>v{dataset.version}</span>
+    </div>
+    <h3><a href={withBase(`/datasets/${dataset.slug}/`)}>{dataset.name}</a></h3>
+    <p>{dataset.purpose}</p>
+    <dl class="compact-stats">
+      <div><dt>Source run</dt><dd>{dataset.source_run.frames} frames</dd></div>
+      <div><dt>Sample</dt><dd>{dataset.packaged_sample.unique_frames} frames</dd></div>
+      <div><dt>Classes</dt><dd>{dataset.classes.length}</dd></div>
+      <div><dt>Resolution</dt><dd>{dataset.source_run.resolution.join('×')}</dd></div>
+    </dl>
+    <a class="text-link" href={withBase(`/datasets/${dataset.slug}/`)}>Inspect dataset <span aria-hidden="true">→</span></a>
+  </div>
+</article>

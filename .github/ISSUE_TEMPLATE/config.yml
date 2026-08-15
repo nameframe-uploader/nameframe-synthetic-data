@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Product and pilot enquiries
+    url: https://getnameframe.com/pilot
+    about: Use the NameFrame pilot form for product discussions rather than a public issue.
+  - name: Security reports
+    url: mailto:hello@getnameframe.com
+    about: Do not disclose credentials or vulnerabilities in a public issue.

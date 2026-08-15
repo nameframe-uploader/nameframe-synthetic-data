@@ -1,0 +1,115 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ModalityViewer from '@/components/ModalityViewer.astro';
+import { datasets, previewUrl, withBase, type DatasetCard } from '@/lib/data';
+
+export function getStaticPaths() {
+  return datasets.map((dataset) => ({ params: { slug: dataset.slug }, props: { dataset } }));
+}
+
+interface Props { dataset: DatasetCard }
+const { dataset } = Astro.props;
+const datasetUrl = new URL(withBase(`/datasets/${dataset.slug}/`), Astro.site).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: `${dataset.name} synthetic dataset sample`,
+    description: dataset.purpose,
+    url: datasetUrl,
+    version: dataset.version,
+    creator: { '@type': 'Organization', name: 'NameFrame', url: 'https://getnameframe.com' },
+    measurementTechnique: 'Unreal Engine synthetic data generation',
+    variableMeasured: dataset.formats,
+    license: new URL(withBase('/terms/'), Astro.site).href,
+    keywords: ['synthetic data', 'computer vision', 'Unreal Engine', ...dataset.classes]
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: new URL(withBase('/'), Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Datasets', item: new URL(withBase('/datasets/'), Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: dataset.name, item: datasetUrl }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title={`${dataset.name} synthetic dataset · NameFrame`}
+  description={`${dataset.purpose} Inspect ${dataset.packaged_sample.unique_frames} packaged frames, formats, quality findings and limitations.`}
+  image={withBase(`/og/${dataset.slug}.png`)}
+  jsonLd={jsonLd}
+>
+  <header class="page-hero">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={withBase('/')}>Home</a><span>/</span><a href={withBase('/datasets/')}>Datasets</a><span>/</span><span>{dataset.name}</span></nav>
+    <p class="kicker">Dataset card · v{dataset.version}</p>
+    <h1>{dataset.name}</h1>
+    <p class="lede">{dataset.purpose}</p>
+    <ul class="pill-list" aria-label="Classes">{dataset.classes.map((label) => <li>{label}</li>)}</ul>
+  </header>
+
+  <section class="section">
+    <div class="content-grid">
+      <div class="prose">
+        <h2>What this sample represents</h2>
+        <p>The source run contains <strong>{dataset.source_run.frames.toLocaleString('en-US')} frames</strong> and <strong>{dataset.source_run.labelled_instances.toLocaleString('en-US')} labelled instances</strong>. The public pack is deliberately smaller: {dataset.packaged_sample.unique_frames} unique frames and {dataset.packaged_sample.labelled_instances_across_archives.toLocaleString('en-US')} labelled instances across its archive records.</p>
+        <p class="callout">{dataset.packaged_sample.note}</p>
+        <h2>Camera policy</h2>
+        <p>{dataset.camera_policy}</p>
+        <h2>Published formats</h2>
+        <ul>{dataset.formats.map((format) => <li>{format}</li>)}</ul>
+      </div>
+      <aside class="panel side-facts">
+        <p class={`status grade-${dataset.grade.letter.toLowerCase()}`}>Reported grade {dataset.grade.letter} · {dataset.grade.score}/100</p>
+        <dl class="fact-list">
+          <div><dt>Engine</dt><dd>{dataset.engine}</dd></div>
+          <div><dt>Map</dt><dd>{dataset.map}</dd></div>
+          <div><dt>Seed</dt><dd>{dataset.seed}</dd></div>
+          <div><dt>Resolution</dt><dd>{dataset.source_run.resolution.join(' × ')}</dd></div>
+          <div><dt>Source run</dt><dd>{dataset.source_run.frames} frames</dd></div>
+          <div><dt>Public sample</dt><dd>{dataset.packaged_sample.unique_frames} unique frames</dd></div>
+          <div><dt>Last verified</dt><dd>{dataset.last_verified}</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <ModalityViewer dataset={dataset} heading={`Inspect the ${dataset.name} modalities.`} />
+
+  <section class="section">
+    <div class="content-grid">
+      <div class="prose">
+        <h2>Downloads</h2>
+        {dataset.distributions.map((distribution) => distribution.download_status === 'available' ? (
+          <article class="download">
+            <h3>{distribution.name}</h3>
+            <p>{distribution.frames} frames · {distribution.labelled_instances.toLocaleString('en-US')} labelled instances · {distribution.size_label}</p>
+            <p><a class="button" href={distribution.official_download_url}>Download ZIP</a></p>
+            <p><strong>SHA-256</strong><br/><code class="hash">{distribution.sha256}</code></p>
+          </article>
+        ) : (
+          <article class="download download-unavailable">
+            <p class="status">Publication pending</p>
+            <h3>{distribution.name}</h3>
+            <p>The configured archive was not publicly reachable on {dataset.last_verified}. No download button is shown until the file and checksum can be verified again.</p>
+            <p><strong>Expected package:</strong> {distribution.frames} frames · {distribution.size_label}</p>
+          </article>
+        ))}
+
+        <h2 id="limitations">Known limitations</h2>
+        <ol>{dataset.limitations.map((limitation) => <li>{limitation}</li>)}</ol>
+
+        <h2>Licensing and citation</h2>
+        <p>{dataset.licensing} Read the <a href={withBase('/terms/')}>data terms</a> before downloading.</p>
+        <p><strong>Suggested citation</strong><br/>{dataset.citation}</p>
+        <p><a href={dataset.official_page}>Compare with the official product page</a></p>
+      </div>
+      <aside class="panel side-facts">
+        <img src={previewUrl(dataset, 'boxes')} alt={`${dataset.name} labelled preview`} width="900" height="675" loading="lazy" />
+        <p class="fine-print">Downscaled preview; use the archive for pixel-level inspection.</p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
